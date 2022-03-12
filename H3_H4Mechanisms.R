@@ -26,6 +26,7 @@ butterflym1<-mutate(butterflym1, gamdens =  gam_index / transect_length)
 # the inverse coefficient of variation
 IVCOV<- function(datarange){
   cov<- ( sd(datarange,na.rm = T)  / mean(datarange,na.rm=T))
+  cov <-  (1+ (1 / ( 4 * samplesize))) * cov
   incov1 <- 1 / cov
   return(incov1)
 }
