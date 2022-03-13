@@ -89,7 +89,6 @@ stackc <- inla.stack(
                     rangescore = stability$rangescore ,
                     rangescore_2 = stability$rangescore_2,
                     sppnum = stability$sppnum)) # spatial random effect
-  #iidx=1:nrow(df), # iid random effect
   ,
   tag= "data"
 )
