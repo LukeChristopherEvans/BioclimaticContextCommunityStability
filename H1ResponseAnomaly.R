@@ -345,7 +345,8 @@ book.plot.field(
   inla.space1b$summary.random$s$mean  , 
   mesh = cmesh) 
 
-plot(inla.space1b$summary.linear.predictor$mean,butterfly.dt$n_change,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
+# Pred vs obs - similar to the first model 
+plot(inla.space1b$summary.fitted.values$mean[1:1504],butterfly.dt$n_change,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
 abline(0,1)
 
 # plots

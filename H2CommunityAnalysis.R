@@ -29,6 +29,12 @@ inla.m4 <- inla(ICOV ~ 1 + rangescore + rangescore_2 + meanpopsize + sppnum,
 summary(inla.m4)
 bri.fixed.plot(inla.m4,together = F)
 
+# check obs vs pred - not brilliant but figure below shows better
+library(scales)
+plot(inla.m4$summary.linear.predictor$mean,stability$ICOV,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
+abline(0,1)
+
+
 # -------- Fit spatial barrier model ----------
 
 library(sf)
@@ -169,6 +175,9 @@ book.plot.field(
   
 epoints[,1] <- epoints[,1] + inla.space1c$summary.fixed$mean[1]
 
+# observed vs predicted
+plot(inla.space1c$summary.linear.predictor$mean,stability$ICOV,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
+abline(0,1)
 
 
 # -------- Plot spatial model marginal fit ----------

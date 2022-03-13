@@ -146,7 +146,6 @@ stackd <- inla.stack(
                     speciesname1= speciesstability$speciesname1 ,
                     speciesname3= speciesstability$speciesname1 ,
                     speciesname2= speciesstability$speciesname2 )) # spatial random effect
-  #iidx=1:nrow(df), # iid random effect
   ,
   tag= "data"
 )
@@ -160,7 +159,6 @@ inla.space1d<- inla(y~0+Intercept + rangepositionspring+ rangepositionspring_2+ 
                  f(speciesname3,rangepositionspring,model="iid",hyper=rand_prior) +f(speciesname4,rangepositionspring_2,model="iid",hyper=rand_prior)
                  , 
                  data = inla.stack.data(stackd),family="Gaussian",
-               #  control.inla =list(int.strategy ="eb",tolerance=1e-6,reordering ="metis",strategy="gaussian"),
                control.compute = list(config=TRUE,waic = TRUE,dic=TRUE),
                control.predictor = list(A = inla.stack.A(stackd),compute=TRUE),
                control.fixed = list(
@@ -254,7 +252,6 @@ simpop<-cbind.data.frame(simpop,estimP,estimlP,estimuP)
 #tiff("fit3_2.tif", res=600, compression = "lzw", height=6, width=6.5, units="in")
 ggplot(data=ptdt2,aes(meanpop,resid,color=country,group=country))+
   geom_point(size=4,alpha=0.7)+
-  # xlim(0,1)+
   scale_color_npg()+
   theme_cowplot() +
   geom_line(data=simpop,aes(simpop,estimP), size=2,alpha=0.9,inherit.aes = F) +
@@ -345,7 +342,6 @@ synchdat<-synchdat[complete.cases(synchdat),]
 # -------- Fit model ----------
 inla.m6<- inla(avgcor ~ 1 + rangescore+ rangescore_2 + nspp +varcor, 
                data=synchdat,
-               #  control.inla =list(int.strategy ="eb",tolerance=1e-6,reordering ="metis",strategy="gaussian"),
                control.compute = list(config=TRUE,waic = TRUE,dic=TRUE),
                control.fixed = list(
                  mean=0, prec= 0.25, # fixed effect priors
