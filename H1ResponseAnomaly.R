@@ -111,6 +111,10 @@ inla.m3 <- inla(n_change ~ 1 + lognminus1+ span +span_2 + span_3 + rng + span_in
 summary(inla.m3)
 bri.hyperpar.plot(inla.m3,together = F)
 
+# check obs vs pred - fits pretty well but observed responses possible more extreme at edges SEE Appendix 3
+library(scales)
+plot(inla.m3$summary.linear.predictor$mean,butterfly.dt$n_change,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
+abline(0,1)
 
 # compare to linear model for a sanity check
 library(lme4)
@@ -341,8 +345,10 @@ book.plot.field(
   inla.space1b$summary.random$s$mean  , 
   mesh = cmesh) 
 
+plot(inla.space1b$summary.linear.predictor$mean,butterfly.dt$n_change,col = alpha("grey", 0.4),xlab="Pred",ylab="obs")
+abline(0,1)
+
 # plots
-library(scales)
 book.plot.field(
   inla.space1b$summary.random$s$mean + inla.space1b$summary.fixed$mean[1] , 
   mesh = cmesh,poly = poly.barrier )
@@ -541,6 +547,7 @@ ggplot(colorbar,aes(ranges,lev,color=as.factor(ranges),group=as.factor(ranges)))
 
 
 # ------------- Reviewers request for Hierarchical GAM approach -------------
+# Appendix 3
 library(mgcv)
 
 butterflym1$SPECIES_NAME= as.factor(butterflym1$SPECIES_NAME)
